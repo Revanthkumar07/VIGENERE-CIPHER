@@ -30,7 +30,79 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 
 ## PROGRAM
+```
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void encrypt(char text[], char key[])
+{
+    int j = 0;
+    int keyLen = strlen(key);
+
+    for (int i = 0; text[i] != '\0'; i++)
+    {
+        if (isalpha(text[i]))
+        {
+            char base = isupper(text[i]) ? 'A' : 'a';
+            int k = toupper(key[j % keyLen]) - 'A';
+
+            text[i] = (text[i] - base + k) % 26 + base;
+            j++;
+        }
+    }
+}
+
+void decrypt(char text[], char key[])
+{
+    int j = 0;
+    int keyLen = strlen(key);
+
+    for (int i = 0; text[i] != '\0'; i++)
+    {
+        if (isalpha(text[i]))
+        {
+            char base = isupper(text[i]) ? 'A' : 'a';
+            int k = toupper(key[j % keyLen]) - 'A';
+
+            text[i] = (text[i] - base - k + 26) % 26 + base;
+            j++;
+        }
+    }
+}
+
+int main()
+{
+    char message[200], original[200], key[100];
+
+    printf("Enter plaintext: ");
+    fgets(message, sizeof(message), stdin);
+    message[strcspn(message, "\n")] = '\0';
+
+    printf("Enter key: ");
+    scanf("%99s", key);
+
+    strcpy(original, message);
+
+    encrypt(message, key);
+    printf("Encrypted message: %s\n", message);
+
+    decrypt(message, key);
+    printf("Decrypted message: %s\n", message);
+
+    return 0;
+}
+
+
+
+```
 
 ## OUTPUT
 
+<img width="1512" height="817" alt="image" src="https://github.com/user-attachments/assets/5155d8da-17f5-4d49-be18-6715cdf17f45" />
+
+
+
 ## RESULT
+The program is executed successfully
